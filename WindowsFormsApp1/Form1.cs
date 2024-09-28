@@ -108,6 +108,7 @@ namespace WindowsFormsApp1
             int today_damage = 0;
             int today_death = 0;
             int today_games = 0;
+            int today_wins = 0;
 
 
             record_info ri = new record_info(0, 0, 0, 0,"");
@@ -136,10 +137,16 @@ namespace WindowsFormsApp1
                     today_damage += r.Damage;
                     today_death += r.Death;
                     today_games++;
+                    if(r.Result > 0)
+                    {
+                        today_wins++;
+                    }
                 }
             }
             AddResultToShow(-1, new record_info(0,0,0,0,""));
-            ShowTodayRecord(today_point,today_kills,today_damage,today_death,today_games);
+
+
+            ShowTodayRecord(today_point,today_kills,today_damage,today_death,today_games,today_wins);
 
             // label1.Text = (record_list[4].damage_struct.ToString());
 
@@ -222,9 +229,16 @@ namespace WindowsFormsApp1
             panel1.Controls.Add(label);
         }
 
-        //今日の試合結果を表示する　引数は左から　ポイント、キル数、ダメージ、デス数、今日のゲーム数
-        private void ShowTodayRecord(int tp, int te, int td, int tdi, int today_games)
+        //今日の試合結果を表示する　引数は左から　ポイント、キル数、ダメージ、デス数、今日のゲーム数 今日の勝利数
+        private void ShowTodayRecord(int tp, int te, int td, int tdi, int today_games,int twins)
         {
+
+            float eliminate_avg = te / today_games;
+            float damage_avg=td/today_games;
+            float death_avg=tdi/today_games;
+            float ratio = (float)te / (float)tdi;
+            float winrates=(float)twins/today_games;
+            
             if (tp > 0)
             {
                 today_point_label.ForeColor = Color.Blue;
@@ -233,13 +247,16 @@ namespace WindowsFormsApp1
             {
                 today_point_label.ForeColor = Color.Red;
             }
+
+            today_day_label.Text = "今日は"+day_time;
             today_point_label.Text = (tp.ToString());
 
-            if (te > 0)
-            {
+            todays_kill_label.Text = (eliminate_avg.ToString("F2"));
+           today_damage_label.Text = (damage_avg.ToString("F2"));
+            today_death_label.Text = (death_avg.ToString("F2"));
+            today_killratio_rabel.Text = (ratio.ToString("F2"));
+            winrate_label.Text = (winrates.ToString("F2"));
 
-
-            }
         }
     }
 

@@ -43,6 +43,15 @@
             this.today_point_label = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.todays_kill_label = new System.Windows.Forms.Label();
+            this.today_day_label = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.today_damage_label = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.today_death_label = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.today_killratio_rabel = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.winrate_label = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // Gain
@@ -127,7 +136,7 @@
             // 
             this.ConfirmLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.ConfirmLabel.AutoSize = true;
-            this.ConfirmLabel.Location = new System.Drawing.Point(572, 242);
+            this.ConfirmLabel.Location = new System.Drawing.Point(588, 242);
             this.ConfirmLabel.Name = "ConfirmLabel";
             this.ConfirmLabel.Size = new System.Drawing.Size(131, 12);
             this.ConfirmLabel.TabIndex = 9;
@@ -147,9 +156,9 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.label4.Font = new System.Drawing.Font("MS UI Gothic", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label4.Location = new System.Drawing.Point(505, 318);
+            this.label4.Location = new System.Drawing.Point(523, 308);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(113, 18);
+            this.label4.Size = new System.Drawing.Size(113, 17);
             this.label4.TabIndex = 11;
             this.label4.Text = "今日のポイント";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -158,9 +167,9 @@
             // 
             this.today_point_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.today_point_label.Font = new System.Drawing.Font("MS UI Gothic", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.today_point_label.Location = new System.Drawing.Point(503, 347);
+            this.today_point_label.Location = new System.Drawing.Point(523, 325);
             this.today_point_label.Name = "today_point_label";
-            this.today_point_label.Size = new System.Drawing.Size(113, 18);
+            this.today_point_label.Size = new System.Drawing.Size(113, 17);
             this.today_point_label.TabIndex = 12;
             this.today_point_label.Text = "-130";
             this.today_point_label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -169,29 +178,138 @@
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.label5.Font = new System.Drawing.Font("MS UI Gothic", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label5.Location = new System.Drawing.Point(628, 318);
+            this.label5.Location = new System.Drawing.Point(523, 359);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(113, 18);
+            this.label5.Size = new System.Drawing.Size(113, 17);
             this.label5.TabIndex = 13;
-            this.label5.Text = "今日のキル数";
+            this.label5.Text = "平均キル数";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // todays_kill_label
             // 
             this.todays_kill_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.todays_kill_label.Font = new System.Drawing.Font("MS UI Gothic", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.todays_kill_label.Location = new System.Drawing.Point(628, 347);
+            this.todays_kill_label.Location = new System.Drawing.Point(525, 376);
             this.todays_kill_label.Name = "todays_kill_label";
-            this.todays_kill_label.Size = new System.Drawing.Size(113, 18);
+            this.todays_kill_label.Size = new System.Drawing.Size(113, 17);
             this.todays_kill_label.TabIndex = 14;
             this.todays_kill_label.Text = "-130";
             this.todays_kill_label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // today_day_label
+            // 
+            this.today_day_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.today_day_label.Location = new System.Drawing.Point(572, 296);
+            this.today_day_label.Name = "today_day_label";
+            this.today_day_label.Size = new System.Drawing.Size(131, 12);
+            this.today_day_label.TabIndex = 15;
+            this.today_day_label.Text = "入力を終えたらここをクリック";
+            this.today_day_label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("MS UI Gothic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label6.Location = new System.Drawing.Point(646, 359);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(111, 17);
+            this.label6.TabIndex = 16;
+            this.label6.Text = "平均ダメージ数";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // today_damage_label
+            // 
+            this.today_damage_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.today_damage_label.Font = new System.Drawing.Font("MS UI Gothic", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.today_damage_label.Location = new System.Drawing.Point(644, 376);
+            this.today_damage_label.Name = "today_damage_label";
+            this.today_damage_label.Size = new System.Drawing.Size(113, 17);
+            this.today_damage_label.TabIndex = 17;
+            this.today_damage_label.Text = "-130";
+            this.today_damage_label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("MS UI Gothic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label7.Location = new System.Drawing.Point(655, 403);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(86, 17);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "平均デス数";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // today_death_label
+            // 
+            this.today_death_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.today_death_label.Font = new System.Drawing.Font("MS UI Gothic", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.today_death_label.Location = new System.Drawing.Point(646, 420);
+            this.today_death_label.Name = "today_death_label";
+            this.today_death_label.Size = new System.Drawing.Size(113, 17);
+            this.today_death_label.TabIndex = 19;
+            this.today_death_label.Text = "-130";
+            this.today_death_label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label8
+            // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.label8.Font = new System.Drawing.Font("MS UI Gothic", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label8.Location = new System.Drawing.Point(546, 403);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(70, 17);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "キル比率";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // today_killratio_rabel
+            // 
+            this.today_killratio_rabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.today_killratio_rabel.Font = new System.Drawing.Font("MS UI Gothic", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.today_killratio_rabel.Location = new System.Drawing.Point(523, 420);
+            this.today_killratio_rabel.Name = "today_killratio_rabel";
+            this.today_killratio_rabel.Size = new System.Drawing.Size(113, 17);
+            this.today_killratio_rabel.TabIndex = 21;
+            this.today_killratio_rabel.Text = "-130";
+            this.today_killratio_rabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label9
+            // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.label9.Font = new System.Drawing.Font("MS UI Gothic", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label9.Location = new System.Drawing.Point(646, 308);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(113, 17);
+            this.label9.TabIndex = 22;
+            this.label9.Text = "勝率";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // winrate_label
+            // 
+            this.winrate_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.winrate_label.Font = new System.Drawing.Font("MS UI Gothic", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.winrate_label.Location = new System.Drawing.Point(646, 325);
+            this.winrate_label.Name = "winrate_label";
+            this.winrate_label.Size = new System.Drawing.Size(113, 17);
+            this.winrate_label.TabIndex = 23;
+            this.winrate_label.Text = "-130";
+            this.winrate_label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(755, 544);
+            this.ClientSize = new System.Drawing.Size(786, 543);
+            this.Controls.Add(this.winrate_label);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.today_killratio_rabel);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.today_death_label);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.today_damage_label);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.today_day_label);
             this.Controls.Add(this.todays_kill_label);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.today_point_label);
@@ -232,6 +350,15 @@
         private System.Windows.Forms.Label today_point_label;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label todays_kill_label;
+        private System.Windows.Forms.Label today_day_label;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label today_damage_label;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label today_death_label;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label today_killratio_rabel;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label winrate_label;
     }
 }
 
