@@ -59,6 +59,7 @@ namespace WindowsFormsApp1
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Text = "Overwatch2戦績記録";
             LoadJsonData();
         }
 
@@ -100,13 +101,19 @@ namespace WindowsFormsApp1
             
             if (failed_convert)
             {
-                ConfirmLabel.Text = ("Error, Failed to convert ");
-                MessageBox.Show("数値が無効です。");
+                //ConfirmLabel.Text = ("Error, Failed to convert ");
+                MessageBox.Show("数値が無効です。","入力エラー");
             }
             else
             {
               //  ConfirmLabel.Text = ("Gain " + gain + " Elimination:" + elim + " Damage:" + damage + " Death:" + dead);
               record_list.Add(new record_info(gain,elim, damage, dead,day_time,heal));
+                MessageBox.Show("数値が保存されました。", "記録完了");
+                Gain.Text = "";
+                EliminationNum.Text = "";
+                DamageNum.Text = "";
+                DeathNum.Text = "";
+                heal_num.Text = "";
                 WriteJsons();
             }
            
@@ -201,7 +208,7 @@ namespace WindowsFormsApp1
         //入力された文字を数列に変換
         private int ConvertToInt(string str)
         {
-            int converted_num = 810;
+            int converted_num = -1;
             try
             {
                 converted_num = Int32.Parse(str);
@@ -209,7 +216,7 @@ namespace WindowsFormsApp1
 
             catch(FormatException)
             {
-
+                Debug.WriteLine("入力された値は数字ではありません");
             }
             return converted_num;
 
@@ -217,7 +224,7 @@ namespace WindowsFormsApp1
         private bool IsNotFail(int num,bool is_already_true)
         {
             
-            return num==810||is_already_true;
+            return num==-1||is_already_true;
         }
 
         //Jsonファイルへコンバート、書き込み
@@ -242,7 +249,7 @@ namespace WindowsFormsApp1
             }
             json_string = JsonConvert.SerializeObject(record);
             Console.WriteLine(json_string);
-            ConfirmLabel.Text = json_string;
+            //ConfirmLabel.Text = json_string;
             File.WriteAllText("data.json", json_string);
             LoadJsonData();
 
@@ -286,7 +293,10 @@ namespace WindowsFormsApp1
         //今日の試合結果を表示する　引数は左から　ポイント、キル数、ダメージ、デス数、今日のゲーム数 今日の勝利数 連勝数　連敗数 最高連勝数　最高連敗数
         private void ShowTodayRecord(int tp, int te, int td, int tdi, int today_games,int twins,int tws, int tls,int tmaxws, int tmaxls,int th)
         {
-
+            if (today_games == 0)
+            {
+                today_games = 1;
+            }
             float eliminate_avg = te / today_games;
             float damage_avg=td/today_games;
             float death_avg=tdi/today_games;
@@ -314,6 +324,9 @@ namespace WindowsFormsApp1
             today_death_label.Text = (death_avg.ToString("F2"));
             today_killratio_rabel.Text = (ratio.ToString("F2"));
             winrate_label.Text = (winrates.ToString("F2")+"%");
+
+            win_game_label.Text = (twins.ToString());
+            lose_game_label.Text = (today_games - twins).ToString();
             if (tws == tls)
             {
                 now_game_streak_label.ForeColor = Color.Black;
@@ -335,6 +348,15 @@ namespace WindowsFormsApp1
 
             max_losestreak_label.ForeColor = Color.Red;
             max_losestreak_label.Text = tmaxls.ToString();
+
+            if (show_all_record)
+            {
+                title_label.Text = "すべての記録";
+            }
+            else
+            {
+                title_label.Text = "今日の記録";
+            }
 
          
 
@@ -358,6 +380,21 @@ namespace WindowsFormsApp1
             }
             select_show_record_info.Text = str;
             LoadJsonData();
+        }
+
+        private void labels_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DialogResult dresult = MessageBox.Show("記録を消しますか？","記録を削除",MessageBoxButtons.YesNo,MessageBoxIcon.Exclamation,MessageBoxDefaultButton.Button2);
+            if(dresult == DialogResult.Yes)
+            {
+                record_list.Clear();
+                WriteJsons();
+            }
         }
     }
 
