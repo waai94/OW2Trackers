@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace WindowsFormsApp1
 {
@@ -22,9 +23,13 @@ namespace WindowsFormsApp1
         int elim;
         int damage;
         int dead;
+        int heal;
         string day_time = DateTime.Now.ToString("yyyy/MM/dd");
 
-       
+        int today_winstreak = 0;
+        int today_losestreak = 0;
+
+        bool show_all_record = false;
 
         public struct record_info
         {
@@ -33,13 +38,16 @@ namespace WindowsFormsApp1
             public int damage_struct { get; set; }
             public int death_struct { get; set; }
             public string day_struct { get; set; }
-            public record_info(int gain_struct, int eliminated_struct, int damage_struct, int death_struct,string day)
+
+            public int heal_struct { get; set; }
+            public record_info(int gain_struct, int eliminated_struct, int damage_struct, int death_struct,string day,int heal_struct)
             {
                 this.gain_struct = gain_struct;
                 this.eliminated_struct= eliminated_struct;
                 this.damage_struct = damage_struct;
                 this.death_struct= death_struct;
                 this.day_struct = day;
+                this.heal_struct= heal_struct;
             }
         }
 
@@ -86,6 +94,10 @@ namespace WindowsFormsApp1
             failed_convert = IsNotFail(damage, failed_convert);
             dead = ConvertToInt(DeathNum.Text);
             failed_convert = IsNotFail(dead, failed_convert);
+            heal = ConvertToInt(heal_num.Text);
+            failed_convert=IsNotFail(heal, failed_convert);
+
+            
             if (failed_convert)
             {
                 ConfirmLabel.Text = ("Error, Failed to convert ");
@@ -94,7 +106,7 @@ namespace WindowsFormsApp1
             else
             {
               //  ConfirmLabel.Text = ("Gain " + gain + " Elimination:" + elim + " Damage:" + damage + " Death:" + dead);
-              record_list.Add(new record_info(gain,elim, damage, dead,day_time));
+              record_list.Add(new record_info(gain,elim, damage, dead,day_time,heal));
                 WriteJsons();
             }
            
@@ -108,9 +120,11 @@ namespace WindowsFormsApp1
             int today_damage = 0;
             int today_death = 0;
             int today_games = 0;
+            int today_wins = 0;
+            int today_heals = 0;
+         
 
-
-            record_info ri = new record_info(0, 0, 0, 0,"");
+            record_info ri = new record_info(0, 0, 0, 0,"",0);
             string json_from_file = File.ReadAllText("data.json");
             List<Record> records = JsonConvert.DeserializeObject<List<Record>>(json_from_file);
             int record_length=0;
@@ -122,24 +136,63 @@ namespace WindowsFormsApp1
                 Console.WriteLine("RECROD IS NULL");
                 return;
             }
+            int ws = 0;
+            int ls = 0;
             foreach (Record r in records)
             {
-                record_list.Add(new record_info(r.Result, r.Eliminate, r.Damage, r.Death,r.Date));
+               
+                record_list.Add(new record_info(r.Result, r.Eliminate, r.Damage, r.Death,r.Date,r.Heal));
                 AddResultToShow(record_length, record_list[record_length]);
                 record_length++;
                 Console.WriteLine(record_length.ToString());
 
-                if (day_time == r.Date)
+                if (day_time == r.Date||show_all_record)
                 {
                     today_point += r.Result;
                     today_kills += r.Eliminate;
                     today_damage += r.Damage;
                     today_death += r.Death;
+                   today_heals += r.Heal;
                     today_games++;
+
+
+                    if (r.Result > 0)
+                    {
+                        //win steak
+                        today_wins++;
+                        ws++;
+
+                      
+
+                        ls = 0;
+
+                    }
+                    else
+                    {
+                        //lose streak
+                        ls++;
+                       
+                        ws = 0;
+                    }
+
+                    if (ls > today_losestreak)
+                    {
+                        today_losestreak = ls;
+
+
+                       
+                    }
+                    if (ws > today_winstreak)
+                    {
+                        today_winstreak = ws;
+
+                    }
                 }
             }
-            AddResultToShow(-1, new record_info(0,0,0,0,""));
-            ShowTodayRecord(today_point,today_kills,today_damage,today_death,today_games);
+            AddResultToShow(-1, new record_info(0,0,0,0,"",0));
+
+
+            ShowTodayRecord(today_point,today_kills,today_damage,today_death,today_games,today_wins,ws,ls,today_winstreak,today_losestreak,today_heals);
 
             // label1.Text = (record_list[4].damage_struct.ToString());
 
@@ -182,6 +235,7 @@ namespace WindowsFormsApp1
                     Eliminate = record_Info.eliminated_struct,
                     Damage = record_Info.damage_struct,
                     Death = record_Info.death_struct,
+                    Heal = record_Info.heal_struct,
                     Date = DateTime.Now.ToString("yyyy/MM/dd")
 
                 });
@@ -205,8 +259,15 @@ namespace WindowsFormsApp1
                 label.Text = record_list[index_array].gain_struct.ToString();
                 label.AutoSize = true;
                 label.Font = new Font(label1.Font.FontFamily, 15);
-                label.Text = ("   "+info.gain_struct.ToString()+  "             " + info.eliminated_struct.ToString()+ "            " + info.damage_struct.ToString()+ "           " + info.death_struct.ToString());
-              
+                label.Text = ("   "+info.gain_struct.ToString()+  "             " + info.eliminated_struct.ToString()+ "            " + info.death_struct.ToString()+ "                " + info.damage_struct.ToString()+"              "+info.heal_struct.ToString());
+                if (info.gain_struct > 0)
+                {
+                    label.ForeColor = Color.Green;
+                }
+                else
+                {
+                    label.ForeColor= Color.Red;
+                }
                 label.Location = new Point(0, 20 + index_array * 30);
             }
             else
@@ -214,7 +275,7 @@ namespace WindowsFormsApp1
                 label.AutoSize = true;
                 label.Font = new Font(label1.Font.FontFamily, 15);
                 label.Location = new Point(0,  + index_array * 30);
-                label.Text = ("Point   " + " Eliminates " + " Damage " + " Death ");
+                label.Text = ("Point   " + "Eliminates    " + "Deaths    " + " Damages   "+"  Heals");
 
             }
             
@@ -222,9 +283,17 @@ namespace WindowsFormsApp1
             panel1.Controls.Add(label);
         }
 
-        //今日の試合結果を表示する　引数は左から　ポイント、キル数、ダメージ、デス数、今日のゲーム数
-        private void ShowTodayRecord(int tp, int te, int td, int tdi, int today_games)
+        //今日の試合結果を表示する　引数は左から　ポイント、キル数、ダメージ、デス数、今日のゲーム数 今日の勝利数 連勝数　連敗数 最高連勝数　最高連敗数
+        private void ShowTodayRecord(int tp, int te, int td, int tdi, int today_games,int twins,int tws, int tls,int tmaxws, int tmaxls,int th)
         {
+
+            float eliminate_avg = te / today_games;
+            float damage_avg=td/today_games;
+            float death_avg=tdi/today_games;
+            float ratio = (float)te / (float)tdi;
+            float winrates=(float)twins/today_games*100;
+            float heal_avg = (float)th / today_games;
+            
             if (tp > 0)
             {
                 today_point_label.ForeColor = Color.Blue;
@@ -233,13 +302,62 @@ namespace WindowsFormsApp1
             {
                 today_point_label.ForeColor = Color.Red;
             }
+
+            today_day_label.Text = "今日は"+day_time;
             today_point_label.Text = (tp.ToString());
 
-            if (te > 0)
+            todays_kill_label.Text = (eliminate_avg.ToString("F2"));
+           today_damage_label.Text = (damage_avg.ToString("F2"));
+            today_heal_label.Text = (heal_avg.ToString("F2"))
+;            
+            
+            today_death_label.Text = (death_avg.ToString("F2"));
+            today_killratio_rabel.Text = (ratio.ToString("F2"));
+            winrate_label.Text = (winrates.ToString("F2")+"%");
+            if (tws == tls)
             {
-
+                now_game_streak_label.ForeColor = Color.Black;
+                now_game_streak_label.Text = ("0");
+            } else if (tws > tls)
+            {
+                now_game_streak_label.ForeColor = Color.Green;
+                now_game_streak_label.Text = (tws.ToString());
 
             }
+            else
+            {
+                now_game_streak_label.ForeColor= Color.Red;
+                now_game_streak_label.Text = tls.ToString();
+            }
+
+            max_winstreak_label.ForeColor = Color.Green;
+            max_winstreak_label.Text=tmaxws.ToString();
+
+            max_losestreak_label.ForeColor = Color.Red;
+            max_losestreak_label.Text = tmaxls.ToString();
+
+         
+
+
+          
+
+        }
+
+        private void ConfirmLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void select_show_record_info_Click(object sender, EventArgs e)
+        {
+            show_all_record = !show_all_record;
+            string str = "すべての記録を表示する";
+            if(show_all_record)
+            {
+                str = "今日の記録のみを表示する";
+            }
+            select_show_record_info.Text = str;
+            LoadJsonData();
         }
     }
 
