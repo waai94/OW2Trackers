@@ -16,6 +16,8 @@ namespace WindowsFormsApp1
         public int Eliminate { get; set; }
         public int Damage { get; set; }
 
+        public int Heal { get; set; }
+
         public string Date {  get; set; }
 
         internal static class Program
