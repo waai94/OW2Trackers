@@ -69,6 +69,8 @@
             this.label15 = new System.Windows.Forms.Label();
             this.lose_game_label = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Gain
@@ -176,7 +178,7 @@
             // 
             // select_show_record_info
             // 
-            this.select_show_record_info.Location = new System.Drawing.Point(296, 418);
+            this.select_show_record_info.Location = new System.Drawing.Point(270, 436);
             this.select_show_record_info.Name = "select_show_record_info";
             this.select_show_record_info.Size = new System.Drawing.Size(144, 23);
             this.select_show_record_info.TabIndex = 34;
@@ -378,12 +380,13 @@
             // today_day_label
             // 
             this.today_day_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-            this.today_day_label.Location = new System.Drawing.Point(350, 18);
+            this.today_day_label.Location = new System.Drawing.Point(323, 9);
             this.today_day_label.Name = "today_day_label";
             this.today_day_label.Size = new System.Drawing.Size(131, 12);
             this.today_day_label.TabIndex = 41;
             this.today_day_label.Text = "入力を終えたらここをクリック";
             this.today_day_label.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.today_day_label.Click += new System.EventHandler(this.today_day_label_Click);
             // 
             // todays_kill_label
             // 
@@ -495,11 +498,33 @@
             this.label16.Text = "敗北数";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(236, 407);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(97, 23);
+            this.button3.TabIndex = 64;
+            this.button3.Text = "１日前の記録";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(345, 407);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(97, 23);
+            this.button4.TabIndex = 65;
+            this.button4.Text = "１日後の記録";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(458, 543);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.lose_game_label);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.win_game_label);
@@ -592,6 +617,8 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lose_game_label;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
     }
 }
 
