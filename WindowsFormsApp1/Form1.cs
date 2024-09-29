@@ -24,9 +24,11 @@ namespace WindowsFormsApp1
         int damage;
         int dead;
         int heal;
-        string day_time = DateTime.Now.ToString("yyyy/MM/dd");
 
-        int today_winstreak = 0;
+       public DateTime date_time = DateTime.Today;
+        string day_time;
+
+    int today_winstreak = 0;
         int today_losestreak = 0;
 
         bool show_all_record = false;
@@ -60,6 +62,7 @@ namespace WindowsFormsApp1
         private void Form1_Load(object sender, EventArgs e)
         {
             this.Text = "Overwatch2戦績記録";
+            day_time=DateConvertToString(date_time);
             LoadJsonData();
         }
 
@@ -107,7 +110,7 @@ namespace WindowsFormsApp1
             else
             {
               //  ConfirmLabel.Text = ("Gain " + gain + " Elimination:" + elim + " Damage:" + damage + " Death:" + dead);
-              record_list.Add(new record_info(gain,elim, damage, dead,day_time,heal));
+              record_list.Add(new record_info(gain,elim, damage, dead,DateConvertToString(DateTime.Today),heal));
                 MessageBox.Show("数値が保存されました。", "記録完了");
                 Gain.Text = "";
                 EliminationNum.Text = "";
@@ -243,7 +246,7 @@ namespace WindowsFormsApp1
                     Damage = record_Info.damage_struct,
                     Death = record_Info.death_struct,
                     Heal = record_Info.heal_struct,
-                    Date = DateTime.Now.ToString("yyyy/MM/dd")
+                    Date = record_Info.day_struct
 
                 });
             }
@@ -293,16 +296,24 @@ namespace WindowsFormsApp1
         //今日の試合結果を表示する　引数は左から　ポイント、キル数、ダメージ、デス数、今日のゲーム数 今日の勝利数 連勝数　連敗数 最高連勝数　最高連敗数
         private void ShowTodayRecord(int tp, int te, int td, int tdi, int today_games,int twins,int tws, int tls,int tmaxws, int tmaxls,int th)
         {
-            if (today_games == 0)
+            float eliminate_avg = 0;
+            float damage_avg = 0;
+            float death_avg = 0;
+            float winrates = 0;
+            float heal_avg = 0;
+            if (today_games != 0)
             {
-                today_games = 1;
+                eliminate_avg = te / today_games;
+                damage_avg = td / today_games;
+                death_avg = tdi / today_games;
+               winrates = (float)twins / today_games * 100;
+                heal_avg = (float)th / today_games;
             }
-            float eliminate_avg = te / today_games;
-            float damage_avg=td/today_games;
-            float death_avg=tdi/today_games;
+           
+            
+            
             float ratio = (float)te / (float)tdi;
-            float winrates=(float)twins/today_games*100;
-            float heal_avg = (float)th / today_games;
+          
             
             if (tp > 0)
             {
@@ -395,6 +406,32 @@ namespace WindowsFormsApp1
                 record_list.Clear();
                 WriteJsons();
             }
+        }
+
+        private void today_day_label_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            date_time = date_time.AddDays(-1);
+            day_time=DateConvertToString(date_time);
+            LoadJsonData();
+
+        }
+
+        public string DateConvertToString(DateTime date)
+        {
+            string str = date.ToString("yyyy/MM/dd");
+            return str;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            date_time = date_time.AddDays(1);
+            day_time = DateConvertToString(date_time);
+            LoadJsonData();
         }
     }
 
