@@ -33,6 +33,7 @@ namespace WindowsFormsApp1
 
         bool show_all_record = false;
 
+        string date_format = "yyyy/MM/dd";
         public struct record_info
         {
             public int gain_struct { get; set; }
@@ -303,9 +304,9 @@ namespace WindowsFormsApp1
             float heal_avg = 0;
             if (today_games != 0)
             {
-                eliminate_avg = te / today_games;
-                damage_avg = td / today_games;
-                death_avg = tdi / today_games;
+                eliminate_avg = (float)te / today_games;
+                damage_avg = (float)td / today_games;
+                death_avg = (float)tdi / today_games;
                winrates = (float)twins / today_games * 100;
                 heal_avg = (float)th / today_games;
             }
@@ -338,6 +339,7 @@ namespace WindowsFormsApp1
 
             win_game_label.Text = (twins.ToString());
             lose_game_label.Text = (today_games - twins).ToString();
+
             if (tws == tls)
             {
                 now_game_streak_label.ForeColor = Color.Black;
@@ -381,6 +383,8 @@ namespace WindowsFormsApp1
 
         }
 
+        //押されるたびに表示する記録を変える
+
         private void select_show_record_info_Click(object sender, EventArgs e)
         {
             show_all_record = !show_all_record;
@@ -397,7 +401,7 @@ namespace WindowsFormsApp1
         {
 
         }
-
+        //記録消去が押されたら
         private void button2_Click(object sender, EventArgs e)
         {
             DialogResult dresult = MessageBox.Show("記録を消しますか？","記録を削除",MessageBoxButtons.YesNo,MessageBoxIcon.Exclamation,MessageBoxDefaultButton.Button2);
@@ -413,6 +417,7 @@ namespace WindowsFormsApp1
 
         }
 
+        //一日前が押されたら
         private void button3_Click(object sender, EventArgs e)
         {
             date_time = date_time.AddDays(-1);
@@ -421,12 +426,14 @@ namespace WindowsFormsApp1
 
         }
 
+        //与えられたDateTimeを指定されたフォーマットに変換
         public string DateConvertToString(DateTime date)
         {
-            string str = date.ToString("yyyy/MM/dd");
+            string str = date.ToString(date_format);
             return str;
         }
 
+        //１日後が押されたら
         private void button4_Click(object sender, EventArgs e)
         {
             date_time = date_time.AddDays(1);
